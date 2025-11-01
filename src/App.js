@@ -189,7 +189,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Lil, Sam en Tommie gaan naar braboland op 12 februari 2026</h1>        
+        <h1>Lil, Sam en Tommie verhuizen naar Braboland op 12 februari 2026</h1>        
         {/* Apartment to Home Animation */}
         <div className="journey-animation">
           <div className="road">
