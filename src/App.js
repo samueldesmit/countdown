@@ -32,10 +32,18 @@ function App() {
   }, [targetDate, startDate]);
 
   // Calculate days remaining from today to targetDate
+  // Add 1 day so that on 11 feb it shows "nog 1 dag"
   const daysRemaining = useMemo(() => {
     const diff = (targetDate - today) / (1000 * 60 * 60 * 24);
-    return Math.ceil(diff);
+    const days = Math.ceil(diff);
+    // Add 1 day to show one day ahead
+    return days + 1;
   }, [targetDate, today]);
+
+  // Check if we've reached or passed the target date
+  const isTargetDateReached = useMemo(() => {
+    return today >= targetDate;
+  }, [today, targetDate]);
 
   // Calculate days passed (from start to preview date)
   const daysPassed = useMemo(() => {
@@ -141,6 +149,7 @@ function App() {
 
   // Generate all dates from start date to target date
   // Dag 182 = 15 augustus (start), Dag 1 = 12 februari (end)
+  // Show in normal order: day 1 to day 182
   const dates = useMemo(() => {
     const datesArray = [];
     
@@ -155,8 +164,8 @@ function App() {
       });
     }
     
-    // Reverse the array to show from last day (182) back to day 1
-    return datesArray.reverse();
+    // Return in normal order (day 1 to day 182)
+    return datesArray;
   }, [startDate, totalDaysInJourney]);
 
   // Format date name
@@ -277,16 +286,22 @@ function App() {
         </div>
 
         <div className="countdown-info">
-          <p className="time-item" style={{ marginBottom: '1.5rem', minWidth: '250px', textAlign: 'center' }}>resterend {daysRemaining} {daysRemaining === 1 ? 'dag' : 'dagen'}</p>
-          <div className="time-remaining">
-            <p className="time-item">{timeRemaining.months} {timeRemaining.months === 1 ? 'maand' : 'maanden'}</p>
-            <p className="time-item">{timeRemaining.weeks} {timeRemaining.weeks === 1 ? 'week' : 'weken'}</p>
-            <p className="time-item">{timeRemaining.days} {timeRemaining.days === 1 ? 'dag' : 'dagen'}</p>
-            <p className="time-item">{timeRemaining.hours} {timeRemaining.hours === 1 ? 'uur' : 'uren'}</p>
-            <p className="time-item">{timeRemaining.minutes} {timeRemaining.minutes === 1 ? 'minuut' : 'minuten'}</p>
-            <p className="time-item">{timeRemaining.seconds} {timeRemaining.seconds === 1 ? 'seconde' : 'seconden'}</p>
-          </div>
-          <p className="crossed-info">{daysPassed} dagen verstreken</p>
+          {isTargetDateReached ? (
+            <p className="time-item" style={{ marginBottom: '1.5rem', minWidth: '250px', textAlign: 'center' }}>het is zover</p>
+          ) : (
+            <>
+              <p className="time-item" style={{ marginBottom: '1.5rem', minWidth: '250px', textAlign: 'center' }}>resterend {daysRemaining} {daysRemaining === 1 ? 'dag' : 'dagen'}</p>
+              <div className="time-remaining">
+                <p className="time-item">{timeRemaining.months} {timeRemaining.months === 1 ? 'maand' : 'maanden'}</p>
+                <p className="time-item">{timeRemaining.weeks} {timeRemaining.weeks === 1 ? 'week' : 'weken'}</p>
+                <p className="time-item">{timeRemaining.days} {timeRemaining.days === 1 ? 'dag' : 'dagen'}</p>
+                <p className="time-item">{timeRemaining.hours} {timeRemaining.hours === 1 ? 'uur' : 'uren'}</p>
+                <p className="time-item">{timeRemaining.minutes} {timeRemaining.minutes === 1 ? 'minuut' : 'minuten'}</p>
+                <p className="time-item">{timeRemaining.seconds} {timeRemaining.seconds === 1 ? 'seconde' : 'seconden'}</p>
+              </div>
+              <p className="crossed-info">{daysPassed} dagen verstreken</p>
+            </>
+          )}
         </div>
         
         <div className="dates-grid">
@@ -295,12 +310,24 @@ function App() {
             // If daysPassed = 50, then days 182, 181, ..., 133 are in the past (should be crossed)
             // Days with dayNumber > (totalDaysInJourney - daysPassed) should be crossed off
             const isCrossedOff = item.dayNumber > (totalDaysInJourney - daysPassed);
+            // Check if this date is the target date (12 februari)
+            const itemDate = new Date(item.date);
+            itemDate.setHours(0, 0, 0, 0);
+            const targetDateOnly = new Date(targetDate);
+            targetDateOnly.setHours(0, 0, 0, 0);
+            const isTargetDate = itemDate.getTime() === targetDateOnly.getTime();
+            
             return (
               <div
                 key={index}
                 className={`date-item ${isCrossedOff ? 'crossed-off' : ''}`}
               >
-                <div className="date-day">Dag {item.dayNumber}</div>
+                <div className="date-day">
+                  {isTargetDate ? 'het is zover' : (() => {
+                    const displayDay = item.dayNumber - 1;
+                    return displayDay > 0 ? `nog ${displayDay} ${displayDay === 1 ? 'dag' : 'dagen'}` : '';
+                  })()}
+                </div>
                 <div className="date-name">{formatDateName(item.date)}</div>
               </div>
             );
