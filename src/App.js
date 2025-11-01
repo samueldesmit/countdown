@@ -189,9 +189,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Aftelling tot 12 februari 2026</h1>
-        <p className="subtitle">Bijna krijgen we de sleutels van Andoornweg 19, ons nieuwe huis 🏠</p>
-        
+        <h1>Lil en Sam gaan naar braboland op 12 februari 2026</h1>        
         {/* Apartment to Home Animation */}
         <div className="journey-animation">
           <div className="road">
