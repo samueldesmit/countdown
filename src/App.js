@@ -19,21 +19,22 @@ function App() {
     return actualToday;
   }, [actualToday]);
 
-  // Calculate the start date (when countdown began - 15 augustus 2025)
+  // Calculate the start date (15 augustus 2025 - dag 182)
   const startDate = useMemo(() => {
     const date = new Date('2025-08-15');
     date.setHours(0, 0, 0, 0);
     return date;
   }, []);
 
-  // Calculate total days in the journey
+  // Calculate total days in the journey (from 15 augustus to 12 februari)
   const totalDaysInJourney = useMemo(() => {
     return Math.ceil((targetDate - startDate) / (1000 * 60 * 60 * 24));
   }, [targetDate, startDate]);
 
-  // Calculate days remaining from preview date
+  // Calculate days remaining from today to targetDate
   const daysRemaining = useMemo(() => {
-    return Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24));
+    const diff = (targetDate - today) / (1000 * 60 * 60 * 24);
+    return Math.ceil(diff);
   }, [targetDate, today]);
 
   // Calculate days passed (from start to preview date)
@@ -41,13 +42,14 @@ function App() {
     return Math.max(0, Math.ceil((today - startDate) / (1000 * 60 * 60 * 24)));
   }, [today, startDate]);
 
-  // Calculate remaining time accurately (months, weeks, days, hours, minutes)
+  // Calculate remaining time accurately (months, weeks, days, hours, minutes, seconds)
   const [timeRemaining, setTimeRemaining] = useState({
     months: 0,
     weeks: 0,
     days: 0,
     hours: 0,
-    minutes: 0
+    minutes: 0,
+    seconds: 0
   });
 
   useEffect(() => {
@@ -55,7 +57,7 @@ function App() {
       const now = new Date();
       
       if (targetDate <= now) {
-        setTimeRemaining({ months: 0, weeks: 0, days: 0, hours: 0, minutes: 0 });
+        setTimeRemaining({ months: 0, weeks: 0, days: 0, hours: 0, minutes: 0, seconds: 0 });
         return;
       }
 
@@ -103,12 +105,18 @@ function App() {
       afterHours.setHours(afterHours.getHours() + hours);
       const minutes = Math.floor((targetDate - afterHours) / (1000 * 60));
 
+      // Calculate seconds remaining (after months, weeks, days, hours, and minutes)
+      const afterMinutes = new Date(afterHours);
+      afterMinutes.setMinutes(afterMinutes.getMinutes() + minutes);
+      const seconds = Math.floor((targetDate - afterMinutes) / 1000);
+
       setTimeRemaining({ 
         months, 
         weeks, 
         days: Math.max(0, days), 
         hours: Math.max(0, hours),
-        minutes: Math.max(0, minutes)
+        minutes: Math.max(0, minutes),
+        seconds: Math.max(0, seconds)
       });
     };
 
@@ -122,26 +130,33 @@ function App() {
   }, [targetDate]);
 
   // Calculate journey progress (0 to ~85% to account for home position)
+  // Progress based on days passed from today
   const journeyProgress = useMemo(() => {
     if (totalDaysInJourney === 0) return 85;
+    // Calculate days passed from startDate (today) - this will be 0 initially
+    const elapsedDays = Math.max(0, Math.floor((new Date() - startDate) / (1000 * 60 * 60 * 24)));
     // Progress up to 85% so truck reaches the home (which is positioned at ~85-90% from left)
-    return Math.min(85, (daysPassed / totalDaysInJourney) * 85);
-  }, [daysPassed, totalDaysInJourney]);
+    return Math.min(85, (elapsedDays / totalDaysInJourney) * 85);
+  }, [startDate, totalDaysInJourney]);
 
   // Generate all dates from start date to target date
+  // Dag 182 = 15 augustus (start), Dag 1 = 12 februari (end)
   const dates = useMemo(() => {
     const datesArray = [];
     
     for (let i = 0; i < totalDaysInJourney; i++) {
       const dateToAdd = new Date(startDate);
       dateToAdd.setDate(startDate.getDate() + i);
+      // DayNumber counts down: first day (15 aug) is 182, last day (12 feb) is 1
+      const dayNumber = totalDaysInJourney - i;
       datesArray.push({
         date: new Date(dateToAdd),
-        dayNumber: i + 1,
+        dayNumber: dayNumber,
       });
     }
     
-    return datesArray;
+    // Reverse the array to show from last day (182) back to day 1
+    return datesArray.reverse();
   }, [startDate, totalDaysInJourney]);
 
   // Format date name
@@ -262,20 +277,24 @@ function App() {
         </div>
 
         <div className="countdown-info">
-          <p className="time-item" style={{ marginBottom: '1.5rem' }}>resterend</p>
+          <p className="time-item" style={{ marginBottom: '1.5rem', minWidth: '250px', textAlign: 'center' }}>resterend {daysRemaining} {daysRemaining === 1 ? 'dag' : 'dagen'}</p>
           <div className="time-remaining">
             <p className="time-item">{timeRemaining.months} {timeRemaining.months === 1 ? 'maand' : 'maanden'}</p>
             <p className="time-item">{timeRemaining.weeks} {timeRemaining.weeks === 1 ? 'week' : 'weken'}</p>
             <p className="time-item">{timeRemaining.days} {timeRemaining.days === 1 ? 'dag' : 'dagen'}</p>
             <p className="time-item">{timeRemaining.hours} {timeRemaining.hours === 1 ? 'uur' : 'uren'}</p>
             <p className="time-item">{timeRemaining.minutes} {timeRemaining.minutes === 1 ? 'minuut' : 'minuten'}</p>
+            <p className="time-item">{timeRemaining.seconds} {timeRemaining.seconds === 1 ? 'seconde' : 'seconden'}</p>
           </div>
-          <p className="crossed-info">{daysPassed} dagen afgestreept</p>
+          <p className="crossed-info">{daysPassed} dagen verstreken</p>
         </div>
         
         <div className="dates-grid">
           {dates.map((item, index) => {
-            const isCrossedOff = index < daysPassed;
+            // Days that have already passed should be crossed off
+            // If daysPassed = 50, then days 182, 181, ..., 133 are in the past (should be crossed)
+            // Days with dayNumber > (totalDaysInJourney - daysPassed) should be crossed off
+            const isCrossedOff = item.dayNumber > (totalDaysInJourney - daysPassed);
             return (
               <div
                 key={index}

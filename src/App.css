@@ -186,29 +186,35 @@
 }
 
 .countdown-info {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .time-remaining {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.75rem;
   margin: 1.5rem 0;
+  width: 100%;
+  align-items: center;
 }
 
 .time-item {
-  font-size: 2rem;
+  font-size: 1.4rem;
   font-weight: 700;
   margin: 0;
   color: #ffd700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   background: rgba(255, 255, 255, 0.1);
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1rem;
   border-radius: 12px;
   border: 2px solid rgba(255, 215, 0, 0.3);
   backdrop-filter: blur(10px);
-  min-width: 120px;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .time-label {
@@ -349,13 +355,18 @@
   }
 
   .time-remaining {
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
   }
 
   .time-item {
-    font-size: 1.4rem;
-    padding: 0.75rem 1rem;
-    min-width: 100px;
+    font-size: 1rem;
+    padding: 0.5rem 0.4rem;
+    min-width: 0;
+  }
+
+  .time-item[style*="minWidth"] {
+    min-width: 200px !important;
   }
 
   .time-label {
