@@ -1,38 +1,384 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  min-height: 100vh;
 }
 
 .App-header {
-  background-color: #282c34;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: flex-start;
+  padding: 2rem;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.App-header h1 {
+  margin: 2rem 0 1rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.subtitle {
+  font-size: 1.3rem;
+  opacity: 0.95;
+  font-weight: 400;
+}
+
+.address {
+  font-size: 1.1rem;
+  margin: 0 0 2rem;
+  opacity: 0.9;
+  font-weight: 500;
+  color: #ffd700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Journey Animation */
+.journey-animation {
+  width: 100%;
+  max-width: 900px;
+  padding: 1rem;
+}
+
+.road {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(to bottom, #4a4a4a 0%, #2a2a2a 100%);
+  border-radius: 60px;
+  margin:0 0  2rem 0;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.road-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(
+    to right,
+    #ffd700 0px,
+    #ffd700 30px,
+    transparent 30px,
+    transparent 60px
+  );
+  transform: translateY(-50%);
+  animation: roadMove 2s linear infinite;
+}
+
+@keyframes roadMove {
+  0% {
+    background-position-x: 0;
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    background-position-x: 60px;
+  }
+}
+
+.truck-container {
+  position: absolute;
+  bottom: 25px;
+  width: 80px;
+  height: 60px;
+  transform: translateX(-50%);
+  transition: left 1s ease-out;
+  z-index: 10;
+  animation: truckBounce 2s ease-in-out infinite;
+}
+
+@keyframes truckBounce {
+  0%, 100% {
+    transform: translateX(-50%) translateX(0px) translateY(0px);
+  }
+  25% {
+    transform: translateX(-50%) translateX(-4px) translateY(-6px);
+  }
+  50% {
+    transform: translateX(-50%) translateX(0px) translateY(-8px);
+  }
+  75% {
+    transform: translateX(-50%) translateX(4px) translateY(-6px);
+  }
+}
+
+.truck {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.apartment-start {
+  position: absolute;
+  left: 1px;
+  bottom: 15px;
+  width: 100px;
+  height: 100px;
+  z-index: 5;
+}
+
+.apartment {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.home-destination {
+  position: absolute;
+  right: -10px;
+  bottom: 10px;
+  width: 100px;
+  height: 100px;
+  z-index: 5;
+}
+
+.home {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+  animation: homeGlow 2s ease-in-out infinite;
+}
+
+@keyframes homeGlow {
+  0%, 100% {
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+  }
+}
+
+.keys-icon {
+  position: absolute;
+  right: 10px;
+  bottom: 105px;
+  font-size: 3rem;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateY(-10px);
+  animation: keysFloat 2s ease-in-out infinite;
+  z-index: 15;
+}
+
+.keys-icon[style*="opacity: 1"] {
+  animation: keysFloat 2s ease-in-out infinite, keysSpin 0.5s ease-in-out;
+}
+
+@keyframes keysFloat {
+  0%, 100% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes keysSpin {
+  0% {
+    transform: rotate(0deg) translateY(-10px);
+  }
+  100% {
+    transform: rotate(360deg) translateY(-10px);
+  }
+}
+
+.countdown-info {
+}
+
+.time-remaining {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+}
+
+.time-item {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: #ffd700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  backdrop-filter: blur(10px);
+  min-width: 120px;
+}
+
+.time-label {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.crossed-info {
+  font-size: 1.2rem;
+  margin: 1rem 0 0.5rem;
+  opacity: 0.9;
+}
+
+.dates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.date-item {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.date-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.date-item.crossed-off {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 0, 0, 0.5);
+  opacity: 0.6;
+  position: relative;
+}
+
+.date-item.crossed-off::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  width: 80%;
+  height: 3px;
+  background: #ff4444;
+  transform: rotate(-45deg);
+  box-shadow: 0 0 4px rgba(255, 68, 68, 0.8);
+}
+
+.date-item.crossed-off::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  width: 80%;
+  height: 3px;
+  background: #ff4444;
+  transform: rotate(45deg);
+  box-shadow: 0 0 4px rgba(255, 68, 68, 0.8);
+}
+
+.date-day {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #ffd700;
+}
+
+.date-name {
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.date-item.crossed-off .date-day,
+.date-item.crossed-off .date-name {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .App-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .journey-animation {
+  
+  }
+
+  .road {
+    height: 100px;
+  }
+
+  .truck-container {
+    width: 60px;
+    height: 45px;
+  }
+
+  .apartment-start {
+    width: 80px;
+    height: 80px;
+    left: 5px;
+    bottom: 5px;
+  }
+
+  .home-destination {
+    width: 80px;
+    height: 80px;
+    right: 5px;
+    bottom: 5px;
+  }
+
+  .keys-icon {
+    font-size: 2.5rem;
+    right: 5px;
+    bottom: 85px;
+  }
+
+  .time-remaining {
+    gap: 1rem;
+  }
+
+  .time-item {
+    font-size: 1.4rem;
+    padding: 0.75rem 1rem;
+    min-width: 100px;
+  }
+
+  .time-label {
+    font-size: 1.2rem;
+  }
+
+  .dates-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .date-item {
+    padding: 0.5rem;
+    min-height: 60px;
+  }
+
+  .date-day {
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .date-name {
+    font-size: 0.7rem;
   }
 }
