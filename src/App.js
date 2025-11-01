@@ -121,8 +121,6 @@ function App() {
     return () => clearInterval(interval);
   }, [targetDate]);
 
-  const [crossedOffCount, setCrossedOffCount] = useState(0);
-
   // Calculate journey progress (0 to ~85% to account for home position)
   const journeyProgress = useMemo(() => {
     if (totalDaysInJourney === 0) return 85;
@@ -161,7 +159,7 @@ function App() {
 
   // Initialize and update crossed off items based on days passed
   useEffect(() => {
-    // For preview mode, use daysPassed directly
+    // For preview mode, use daysPassed directly (no localStorage needed)
     // For actual mode, check localStorage
     const storageKey = 'grave-countdown-crossed';
     const lastUpdateKey = 'grave-countdown-last-update';
@@ -170,9 +168,8 @@ function App() {
     const todayString = today.toDateString();
     const lastUpdateString = localStorage.getItem(lastUpdateKey);
     
-    // If we're in preview mode (today !== actualToday), use daysPassed
+    // If we're in preview mode (today !== actualToday), no localStorage needed
     if (today.getTime() !== actualToday.getTime()) {
-      setCrossedOffCount(daysPassed);
       return;
     }
     
@@ -187,8 +184,6 @@ function App() {
       localStorage.setItem(storageKey, newCrossedCount.toString());
       localStorage.setItem(lastUpdateKey, todayString);
     }
-    
-    setCrossedOffCount(currentCrossedCount);
   }, [daysRemaining, today, actualToday, daysPassed, totalDaysInJourney]);
 
   return (
