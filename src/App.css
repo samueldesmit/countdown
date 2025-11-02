@@ -775,9 +775,14 @@
   filter: invert(1) drop-shadow(2px 2px 4px rgba(255, 255, 255, 0.3));
 }
 
-/* All headlight animations and glow effects removed */
+/* Headlights in dark mode - simple visible lights, no glow effects */
+.App.dark-mode .headlight {
+  opacity: 1 !important;
+}
 
-/* Truck 2 headlights are static (no animations) for better performance */
+.App.dark-mode .headlight-beam {
+  opacity: 0.3 !important; /* Light beams visible but subtle */
+}
 
 /* Tree color animations in dark mode - colorful but no glow effects */
 .App.dark-mode .tree-left-1:not(.no-animation) .tree-svg,
