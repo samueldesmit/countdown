@@ -649,7 +649,7 @@ function App() {
               </svg>
             </div>
             <div className="truck-container" style={{ left: `${journeyProgress}%` }}>
-              <svg className="truck" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+              <svg className="truck" viewBox="0 0 150 60" xmlns="http://www.w3.org/2000/svg">
                 {/* Truck body */}
                 <rect x="10" y="25" width="50" height="25" fill="#d97757" rx="2"/>
                 {/* Truck cabin */}
@@ -666,12 +666,40 @@ function App() {
                   <circle cx="50" cy="50" r="6" fill="#2c2c2c"/>
                   <circle cx="50" cy="50" r="3" fill="#666"/>
                 </g>
-                {/* Headlights */}
+                {/* Headlights - visible in light mode (back) */}
                 <circle cx="10" cy="37" r="2" fill="#ffd700"/>
+                {/* Headlights for dark mode - animated glow effect at FRONT of truck */}
+                <g className="headlights">
+                  <defs>
+                    <linearGradient id="lightBeamGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#ffffaa" stopOpacity="0.7"/>
+                      <stop offset="50%" stopColor="#ffffaa" stopOpacity="0.4"/>
+                      <stop offset="100%" stopColor="#ffffaa" stopOpacity="0"/>
+                    </linearGradient>
+                    <linearGradient id="lightBeamGradient1-inner" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#fff8dc" stopOpacity="0.6"/>
+                      <stop offset="50%" stopColor="#fff8dc" stopOpacity="0.3"/>
+                      <stop offset="100%" stopColor="#fff8dc" stopOpacity="0"/>
+                    </linearGradient>
+                    <radialGradient id="headlightGlow1" cx="50%" cy="50%">
+                      <stop offset="0%" stopColor="#ffffff" stopOpacity="1"/>
+                      <stop offset="100%" stopColor="#ffffaa" stopOpacity="0"/>
+                    </radialGradient>
+                  </defs>
+                  {/* Light beams extending forward from left headlight */}
+                  <ellipse className="headlight-beam beam-outer beam-left" cx="115" cy="38" rx="28" ry="9" fill="url(#lightBeamGradient1)" opacity="0"/>
+                  <ellipse className="headlight-beam beam-inner beam-left" cx="112" cy="38" rx="20" ry="6" fill="url(#lightBeamGradient1-inner)" opacity="0"/>
+                  {/* Light beams extending forward from right headlight */}
+                  <ellipse className="headlight-beam beam-outer beam-right" cx="115" cy="44" rx="28" ry="9" fill="url(#lightBeamGradient1)" opacity="0"/>
+                  <ellipse className="headlight-beam beam-inner beam-right" cx="112" cy="44" rx="20" ry="6" fill="url(#lightBeamGradient1-inner)" opacity="0"/>
+                  {/* Actual headlight bulbs at front */}
+                  <circle className="headlight headlight-left" cx="80" cy="38" r="3.5" fill="url(#headlightGlow1)" opacity="0"/>
+                  <circle className="headlight headlight-right" cx="80" cy="44" r="3.5" fill="url(#headlightGlow1)" opacity="0"/>
+                </g>
               </svg>
             </div>
             <div className="truck-container truck-2" style={{ left: `${Math.max(0, journeyProgress - 5)}%` }}>
-              <svg className="truck truck-2-svg" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+              <svg className="truck truck-2-svg" viewBox="0 0 150 60" xmlns="http://www.w3.org/2000/svg">
                 {/* Truck body */}
                 <rect x="10" y="25" width="50" height="25" fill="#c5896b" rx="2"/>
                 {/* Truck cabin */}
@@ -688,8 +716,36 @@ function App() {
                   <circle cx="50" cy="50" r="6" fill="#2c2c2c"/>
                   <circle cx="50" cy="50" r="3" fill="#666"/>
                 </g>
-                {/* Headlights */}
+                {/* Headlights - visible in light mode (back) */}
                 <circle cx="10" cy="37" r="2" fill="#ffd700"/>
+                {/* Headlights for dark mode - animated glow effect at FRONT of truck */}
+                <g className="headlights">
+                  <defs>
+                    <linearGradient id="lightBeamGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#ffffaa" stopOpacity="0.7"/>
+                      <stop offset="50%" stopColor="#ffffaa" stopOpacity="0.4"/>
+                      <stop offset="100%" stopColor="#ffffaa" stopOpacity="0"/>
+                    </linearGradient>
+                    <linearGradient id="lightBeamGradient2-inner" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#fff8dc" stopOpacity="0.6"/>
+                      <stop offset="50%" stopColor="#fff8dc" stopOpacity="0.3"/>
+                      <stop offset="100%" stopColor="#fff8dc" stopOpacity="0"/>
+                    </linearGradient>
+                    <radialGradient id="headlightGlow2" cx="50%" cy="50%">
+                      <stop offset="0%" stopColor="#ffffff" stopOpacity="1"/>
+                      <stop offset="100%" stopColor="#ffffaa" stopOpacity="0"/>
+                    </radialGradient>
+                  </defs>
+                  {/* Light beams extending forward from left headlight */}
+                  <ellipse className="headlight-beam beam-outer beam-left" cx="115" cy="38" rx="28" ry="9" fill="url(#lightBeamGradient2)" opacity="0"/>
+                  <ellipse className="headlight-beam beam-inner beam-left" cx="112" cy="38" rx="20" ry="6" fill="url(#lightBeamGradient2-inner)" opacity="0"/>
+                  {/* Light beams extending forward from right headlight */}
+                  <ellipse className="headlight-beam beam-outer beam-right" cx="115" cy="44" rx="28" ry="9" fill="url(#lightBeamGradient2)" opacity="0"/>
+                  <ellipse className="headlight-beam beam-inner beam-right" cx="112" cy="44" rx="20" ry="6" fill="url(#lightBeamGradient2-inner)" opacity="0"/>
+                  {/* Actual headlight bulbs at front */}
+                  <circle className="headlight headlight-left" cx="80" cy="38" r="3.5" fill="url(#headlightGlow2)" opacity="0"/>
+                  <circle className="headlight headlight-right" cx="80" cy="44" r="3.5" fill="url(#headlightGlow2)" opacity="0"/>
+                </g>
               </svg>
             </div>
             <div className="home-destination">
