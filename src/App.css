@@ -737,3 +737,111 @@
 .App.dark-mode .truck {
   filter: invert(1) drop-shadow(2px 2px 4px rgba(255, 255, 255, 0.3));
 }
+
+/* Fairy-like blinking trees in dark mode - different colors for each tree group */
+.App.dark-mode .tree-left-1 .tree-svg,
+.App.dark-mode .tree-right-1 .tree-svg,
+.App.dark-mode .tree-left-alt-1 .tree-svg {
+  animation: treeColorBlink1 2.5s ease-in-out infinite;
+}
+
+.App.dark-mode .tree-left-2 .tree-svg,
+.App.dark-mode .tree-right-2 .tree-svg,
+.App.dark-mode .tree-right-alt-1 .tree-svg {
+  animation: treeColorBlink2 3s ease-in-out infinite;
+}
+
+.App.dark-mode .tree-left-3 .tree-svg,
+.App.dark-mode .tree-right-3 .tree-svg,
+.App.dark-mode .tree-left-alt-2 .tree-svg {
+  animation: treeColorBlink3 2.8s ease-in-out infinite;
+}
+
+.App.dark-mode .tree-left-4 .tree-svg,
+.App.dark-mode .tree-right-4 .tree-svg,
+.App.dark-mode .tree-right-alt-2 .tree-svg {
+  animation: treeColorBlink4 3.2s ease-in-out infinite;
+}
+
+.App.dark-mode .tree-left-5 .tree-svg,
+.App.dark-mode .tree-right-5 .tree-svg {
+  animation: treeColorBlink5 2.7s ease-in-out infinite;
+}
+
+.App.dark-mode .tree-left-6 .tree-svg,
+.App.dark-mode .tree-right-6 .tree-svg {
+  animation: treeColorBlink6 3.1s ease-in-out infinite;
+}
+
+.App.dark-mode .tree-top-left-1 .tree-svg,
+.App.dark-mode .tree-top-right-1 .tree-svg,
+.App.dark-mode .tree-top-alt-left-1 .tree-svg {
+  animation: treeColorBlink7 2.9s ease-in-out infinite;
+}
+
+.App.dark-mode .tree-top-left-2 .tree-svg,
+.App.dark-mode .tree-top-right-2 .tree-svg,
+.App.dark-mode .tree-top-alt-left-2 .tree-svg,
+.App.dark-mode .tree-top-alt-right-1 .tree-svg,
+.App.dark-mode .tree-top-alt-right-2 .tree-svg {
+  animation: treeColorBlink8 3.3s ease-in-out infinite;
+}
+
+/* Color blink animations - different colors for fairy effect */
+@keyframes treeColorBlink1 {
+  0%, 100% { filter: hue-rotate(0deg) drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)); }
+  25% { filter: hue-rotate(60deg) drop-shadow(0 0 15px rgba(255, 182, 193, 0.8)); }
+  50% { filter: hue-rotate(120deg) drop-shadow(0 0 15px rgba(255, 20, 147, 0.8)); }
+  75% { filter: hue-rotate(180deg) drop-shadow(0 0 15px rgba(138, 43, 226, 0.8)); }
+}
+
+@keyframes treeColorBlink2 {
+  0%, 100% { filter: hue-rotate(0deg) drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)); }
+  20% { filter: hue-rotate(90deg) drop-shadow(0 0 15px rgba(135, 206, 250, 0.8)); }
+  40% { filter: hue-rotate(180deg) drop-shadow(0 0 15px rgba(255, 105, 180, 0.8)); }
+  60% { filter: hue-rotate(270deg) drop-shadow(0 0 15px rgba(147, 112, 219, 0.8)); }
+  80% { filter: hue-rotate(360deg) drop-shadow(0 0 15px rgba(255, 192, 203, 0.8)); }
+}
+
+@keyframes treeColorBlink3 {
+  0%, 100% { filter: hue-rotate(0deg) drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)); }
+  33% { filter: hue-rotate(120deg) drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)); }
+  66% { filter: hue-rotate(240deg) drop-shadow(0 0 15px rgba(218, 112, 214, 0.8)); }
+}
+
+@keyframes treeColorBlink4 {
+  0%, 100% { filter: hue-rotate(0deg) drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)); }
+  25% { filter: hue-rotate(80deg) drop-shadow(0 0 15px rgba(30, 144, 255, 0.8)); }
+  50% { filter: hue-rotate(160deg) drop-shadow(0 0 15px rgba(255, 69, 0, 0.8)); }
+  75% { filter: hue-rotate(240deg) drop-shadow(0 0 15px rgba(186, 85, 211, 0.8)); }
+}
+
+@keyframes treeColorBlink5 {
+  0%, 100% { filter: hue-rotate(0deg) drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)); }
+  30% { filter: hue-rotate(100deg) drop-shadow(0 0 15px rgba(255, 20, 147, 0.8)); }
+  60% { filter: hue-rotate(200deg) drop-shadow(0 0 15px rgba(0, 191, 255, 0.8)); }
+}
+
+@keyframes treeColorBlink6 {
+  0%, 100% { filter: hue-rotate(0deg) drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)); }
+  20% { filter: hue-rotate(70deg) drop-shadow(0 0 15px rgba(255, 182, 193, 0.8)); }
+  40% { filter: hue-rotate(140deg) drop-shadow(0 0 15px rgba(255, 105, 180, 0.8)); }
+  60% { filter: hue-rotate(210deg) drop-shadow(0 0 15px rgba(148, 0, 211, 0.8)); }
+  80% { filter: hue-rotate(280deg) drop-shadow(0 0 15px rgba(255, 20, 147, 0.8)); }
+}
+
+@keyframes treeColorBlink7 {
+  0%, 100% { filter: hue-rotate(0deg) drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)); }
+  25% { filter: hue-rotate(50deg) drop-shadow(0 0 15px rgba(255, 192, 203, 0.8)); }
+  50% { filter: hue-rotate(150deg) drop-shadow(0 0 15px rgba(138, 43, 226, 0.8)); }
+  75% { filter: hue-rotate(250deg) drop-shadow(0 0 15px rgba(135, 206, 250, 0.8)); }
+}
+
+@keyframes treeColorBlink8 {
+  0%, 100% { filter: hue-rotate(0deg) drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)); }
+  16% { filter: hue-rotate(60deg) drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)); }
+  33% { filter: hue-rotate(120deg) drop-shadow(0 0 15px rgba(255, 20, 147, 0.8)); }
+  50% { filter: hue-rotate(180deg) drop-shadow(0 0 15px rgba(30, 144, 255, 0.8)); }
+  66% { filter: hue-rotate(240deg) drop-shadow(0 0 15px rgba(147, 112, 219, 0.8)); }
+  83% { filter: hue-rotate(300deg) drop-shadow(0 0 15px rgba(255, 105, 180, 0.8)); }
+}
