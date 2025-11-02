@@ -57,7 +57,6 @@ function App() {
   };
 
   const [isDarkMode, setIsDarkMode] = useState(getDefaultDarkMode);
-  const [columnsPerRow, setColumnsPerRow] = useState(0);
   const datesGridRef = useRef(null);
   const countdownInfoRef = useRef(null);
 
@@ -153,30 +152,7 @@ function App() {
     return () => clearInterval(interval);
   }, [targetDate]);
 
-  // Calculate columns per row based on screen width
-  useEffect(() => {
-    const calculateColumns = () => {
-      const width = window.innerWidth;
-      // Match the CSS grid-template-columns logic
-      if (width <= 768) {
-        setColumnsPerRow(3); // Mobile: 3 columns
-      } else {
-        // Desktop: calculate based on minmax(200px, 1fr)
-        const maxWidth = 1200;
-        const minItemWidth = 200;
-        const gap = 16;
-        const padding = 32;
-        const availableWidth = Math.min(width - padding, maxWidth);
-        const cols = Math.floor((availableWidth + gap) / (minItemWidth + gap));
-        setColumnsPerRow(Math.max(1, cols));
-      }
-    };
-
-    calculateColumns();
-    window.addEventListener('resize', calculateColumns);
-    
-    return () => window.removeEventListener('resize', calculateColumns);
-  }, []);
+  // Removed columnsPerRow calculation - no longer needed after GSAP animations removed
 
   // Cool GSAP entrance animation on initial load
   useEffect(() => {
