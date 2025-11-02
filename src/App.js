@@ -299,68 +299,7 @@ function App() {
     return datesArray;
   }, [startDate, totalDaysInJourney]);
 
-  // Animate date items coming in one by one on scroll
-  // Disabled in dark mode to avoid conflicts with color animations
-  useEffect(() => {
-    if (!datesGridRef.current) return;
-    
-    const dateItems = datesGridRef.current.querySelectorAll('.date-item');
-    if (dateItems.length === 0) return;
-    
-    // Skip GSAP animations in dark mode
-    if (isDarkMode) {
-      // Just make items visible immediately in dark mode
-      gsap.set(dateItems, {
-        opacity: 1,
-        y: 0,
-        scale: 1
-      });
-      return;
-    }
-    
-    // Set initial state - hidden and moved down
-    gsap.set(dateItems, {
-      opacity: 0,
-      y: 30,
-      scale: 0.9
-    });
-    
-    // Create scroll-triggered animation
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const index = Array.from(dateItems).indexOf(entry.target);
-          
-          // Animate this item in
-          gsap.to(entry.target, {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.6,
-            ease: 'back.out(1.7)',
-            delay: (index % (columnsPerRow || 3)) * 0.05 // Stagger within row
-          });
-          
-          // Stop observing this item once it's animated
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-    
-    // Observe all date items
-    dateItems.forEach((item) => {
-      observer.observe(item);
-    });
-    
-    return () => {
-      dateItems.forEach((item) => {
-        observer.unobserve(item);
-      });
-    };
-  }, [dates, columnsPerRow, isDarkMode]);
+  // GSAP animations removed for better performance - date items are always visible
 
   // Format date name
   const formatDateName = (date) => {
