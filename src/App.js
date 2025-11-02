@@ -616,10 +616,15 @@ function App() {
             const shouldBeHalfCrossed = isToday && !isTargetDate;
             const shouldBeFullyCrossed = isCrossedOff && !isToday;
             
+            // Check if this date is 24 or 25 December (for special animations in dark mode)
+            const isDec24 = itemDate.getMonth() === 11 && itemDate.getDate() === 24; // month 11 = december
+            const isDec25 = itemDate.getMonth() === 11 && itemDate.getDate() === 25;
+            const isChristmas = isDec24 || isDec25;
+            
             return (
               <div
                 key={index}
-                className={`date-item ${shouldBeFullyCrossed ? 'crossed-off' : ''} ${shouldBeHalfCrossed ? 'half-crossed-off' : ''}`}
+                className={`date-item ${shouldBeFullyCrossed ? 'crossed-off' : ''} ${shouldBeHalfCrossed ? 'half-crossed-off' : ''} ${isChristmas ? 'christmas-date' : ''}`}
               >
                 <div className="date-day">
                   {isTargetDate ? 'het is zover' : (() => {

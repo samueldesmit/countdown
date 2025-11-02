@@ -762,51 +762,22 @@
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Color blinking animations for date items in dark mode - optimized version */
-/* Optimized for performance with will-change and reduced complexity */
-.App.dark-mode .date-item {
+/* Color blinking animations for date items in dark mode - ONLY for 24 & 25 December */
+/* Optimized for performance - animations only on Christmas dates */
+.App.dark-mode .date-item.christmas-date {
   will-change: filter, box-shadow;
   transform: translateZ(0); /* Force GPU acceleration */
 }
 
-.App.dark-mode .date-item:nth-child(8n+1) {
+/* Only Christmas dates (24 & 25 December) get animations */
+.App.dark-mode .date-item.christmas-date:nth-child(odd) {
   animation: dateColorBlink1 2.5s ease-in-out infinite;
   animation-delay: 0s;
 }
 
-.App.dark-mode .date-item:nth-child(8n+2) {
+.App.dark-mode .date-item.christmas-date:nth-child(even) {
   animation: dateColorBlink2 3s ease-in-out infinite;
   animation-delay: 0.4s;
-}
-
-.App.dark-mode .date-item:nth-child(8n+3) {
-  animation: dateColorBlink3 2.8s ease-in-out infinite;
-  animation-delay: 0.8s;
-}
-
-.App.dark-mode .date-item:nth-child(8n+4) {
-  animation: dateColorBlink4 3.2s ease-in-out infinite;
-  animation-delay: 0.2s;
-}
-
-.App.dark-mode .date-item:nth-child(8n+5) {
-  animation: dateColorBlink5 2.7s ease-in-out infinite;
-  animation-delay: 0.6s;
-}
-
-.App.dark-mode .date-item:nth-child(8n+6) {
-  animation: dateColorBlink6 3.1s ease-in-out infinite;
-  animation-delay: 0.1s;
-}
-
-.App.dark-mode .date-item:nth-child(8n+7) {
-  animation: dateColorBlink7 2.9s ease-in-out infinite;
-  animation-delay: 0.5s;
-}
-
-.App.dark-mode .date-item:nth-child(8n+8) {
-  animation: dateColorBlink8 3.3s ease-in-out infinite;
-  animation-delay: 0.9s;
 }
 
 .App.dark-mode .crossed-info {
