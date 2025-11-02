@@ -1,4 +1,5 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { gsap } from 'gsap';
 import './App.css';
 
 function App() {
@@ -55,6 +56,9 @@ function App() {
   };
 
   const [isDarkMode, setIsDarkMode] = useState(getDefaultDarkMode);
+  const [columnsPerRow, setColumnsPerRow] = useState(0);
+  const datesGridRef = useRef(null);
+  const countdownInfoRef = useRef(null);
 
   // Calculate days passed (from start to preview date)
   const daysPassed = useMemo(() => {
@@ -148,6 +152,87 @@ function App() {
     return () => clearInterval(interval);
   }, [targetDate]);
 
+  // Calculate columns per row based on screen width
+  useEffect(() => {
+    const calculateColumns = () => {
+      const width = window.innerWidth;
+      // Match the CSS grid-template-columns logic
+      if (width <= 768) {
+        setColumnsPerRow(3); // Mobile: 3 columns
+      } else {
+        // Desktop: calculate based on minmax(200px, 1fr)
+        const maxWidth = 1200;
+        const minItemWidth = 200;
+        const gap = 16;
+        const padding = 32;
+        const availableWidth = Math.min(width - padding, maxWidth);
+        const cols = Math.floor((availableWidth + gap) / (minItemWidth + gap));
+        setColumnsPerRow(Math.max(1, cols));
+      }
+    };
+
+    calculateColumns();
+    window.addEventListener('resize', calculateColumns);
+    
+    return () => window.removeEventListener('resize', calculateColumns);
+  }, []);
+
+  // Cool GSAP entrance animation on initial load
+  useEffect(() => {
+    if (!countdownInfoRef.current) return;
+    
+    const timeItems = countdownInfoRef.current.querySelectorAll('.time-item');
+    const crossedInfo = countdownInfoRef.current.querySelector('.crossed-info');
+    
+    if (timeItems.length === 0) return;
+    
+    // Set initial state - items hidden and transformed
+    gsap.set([timeItems, crossedInfo], {
+      opacity: 0,
+      y: 50,
+      rotationX: -90,
+      scale: 0.5,
+      filter: 'blur(10px)'
+    });
+    
+    // Create timeline for staggered entrance
+    const tl = gsap.timeline({ delay: 0.5 });
+    
+    // Animate each time item with different delays and directions
+    timeItems.forEach((item, index) => {
+      const delay = index * 0.1;
+      const rotationY = (index % 2 === 0) ? -360 : 360; // Alternate rotation direction
+      
+      tl.to(item, {
+        opacity: 1,
+        y: 0,
+        rotationX: 0,
+        rotationY: rotationY,
+        scale: 1,
+        filter: 'blur(0px)',
+        duration: 1,
+        ease: 'back.out(1.7)'
+      }, delay);
+    });
+    
+    // Animate crossed info after time items
+    if (crossedInfo) {
+      tl.to(crossedInfo, {
+        opacity: 1,
+        y: 0,
+        rotationX: 0,
+        scale: 1,
+        filter: 'blur(0px)',
+        duration: 0.8,
+        ease: 'power3.out'
+      }, timeItems.length * 0.1 + 0.2);
+    }
+    
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
   // Calculate journey progress (0 to ~85% to account for home position)
   // Progress based on days passed from today
   const journeyProgress = useMemo(() => {
@@ -178,6 +263,57 @@ function App() {
     // Return in normal order (day 1 to day 182)
     return datesArray;
   }, [startDate, totalDaysInJourney]);
+
+  // Animate date items coming in one by one on scroll
+  useEffect(() => {
+    if (!datesGridRef.current) return;
+    
+    const dateItems = datesGridRef.current.querySelectorAll('.date-item');
+    if (dateItems.length === 0) return;
+    
+    // Set initial state - hidden and moved down
+    gsap.set(dateItems, {
+      opacity: 0,
+      y: 30,
+      scale: 0.9
+    });
+    
+    // Create scroll-triggered animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = Array.from(dateItems).indexOf(entry.target);
+          
+          // Animate this item in
+          gsap.to(entry.target, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            ease: 'back.out(1.7)',
+            delay: (index % (columnsPerRow || 3)) * 0.05 // Stagger within row
+          });
+          
+          // Stop observing this item once it's animated
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    
+    // Observe all date items
+    dateItems.forEach((item) => {
+      observer.observe(item);
+    });
+    
+    return () => {
+      dateItems.forEach((item) => {
+        observer.unobserve(item);
+      });
+    };
+  }, [dates, columnsPerRow]);
 
   // Format date name
   const formatDateName = (date) => {
@@ -304,7 +440,7 @@ function App() {
           </div>
         </div>
 
-        <div className="countdown-info">
+        <div className="countdown-info" ref={countdownInfoRef}>
           {isTargetDateReached ? (
             <p className="time-item" style={{ marginBottom: '1.5rem', minWidth: '250px', textAlign: 'center' }}>het is zover</p>
           ) : (
@@ -323,7 +459,7 @@ function App() {
           )}
         </div>
         
-        <div className="dates-grid">
+        <div className="dates-grid" ref={datesGridRef}>
           {dates.map((item, index) => {
             // Days that have already passed should be crossed off
             // If daysPassed = 50, then days 182, 181, ..., 133 are in the past (should be crossed)
