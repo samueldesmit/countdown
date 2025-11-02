@@ -353,6 +353,7 @@
   border-color: rgba(255, 200, 0, 0.5);
   opacity: 0.8;
   position: relative;
+  padding: 0;
 }
 
 .date-item.half-crossed-off::before {
