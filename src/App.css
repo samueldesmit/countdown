@@ -753,6 +753,53 @@
   border-color: rgba(255, 255, 255, 0.3);
 }
 
+/* Color blinking animations for date items in dark mode - optimized version */
+/* Optimized for performance with will-change and reduced complexity */
+.App.dark-mode .date-item {
+  will-change: filter, box-shadow;
+  transform: translateZ(0); /* Force GPU acceleration */
+}
+
+.App.dark-mode .date-item:nth-child(8n+1) {
+  animation: dateColorBlink1 2.5s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.App.dark-mode .date-item:nth-child(8n+2) {
+  animation: dateColorBlink2 3s ease-in-out infinite;
+  animation-delay: 0.4s;
+}
+
+.App.dark-mode .date-item:nth-child(8n+3) {
+  animation: dateColorBlink3 2.8s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+
+.App.dark-mode .date-item:nth-child(8n+4) {
+  animation: dateColorBlink4 3.2s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.App.dark-mode .date-item:nth-child(8n+5) {
+  animation: dateColorBlink5 2.7s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+
+.App.dark-mode .date-item:nth-child(8n+6) {
+  animation: dateColorBlink6 3.1s ease-in-out infinite;
+  animation-delay: 0.1s;
+}
+
+.App.dark-mode .date-item:nth-child(8n+7) {
+  animation: dateColorBlink7 2.9s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.App.dark-mode .date-item:nth-child(8n+8) {
+  animation: dateColorBlink8 3.3s ease-in-out infinite;
+  animation-delay: 0.9s;
+}
+
 .App.dark-mode .crossed-info {
   color: #e0c9b5;
 }
@@ -983,4 +1030,63 @@
   50% { filter: hue-rotate(180deg) drop-shadow(0 0 25px rgba(30, 144, 255, 1)) drop-shadow(0 0 40px rgba(30, 144, 255, 0.6)) drop-shadow(0 0 60px rgba(30, 144, 255, 0.3)); }
   66% { filter: hue-rotate(240deg) drop-shadow(0 0 25px rgba(147, 112, 219, 1)) drop-shadow(0 0 40px rgba(147, 112, 219, 0.6)) drop-shadow(0 0 60px rgba(147, 112, 219, 0.3)); }
   83% { filter: hue-rotate(300deg) drop-shadow(0 0 25px rgba(255, 105, 180, 1)) drop-shadow(0 0 40px rgba(255, 105, 180, 0.6)) drop-shadow(0 0 60px rgba(255, 105, 180, 0.3)); }
+}
+
+/* Optimized color blink animations for date items - using box-shadow for better performance */
+@keyframes dateColorBlink1 {
+  0%, 100% { filter: hue-rotate(0deg); box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+  25% { filter: hue-rotate(60deg); box-shadow: 0 0 30px rgba(255, 182, 193, 0.8); }
+  50% { filter: hue-rotate(120deg); box-shadow: 0 0 30px rgba(255, 20, 147, 0.8); }
+  75% { filter: hue-rotate(180deg); box-shadow: 0 0 30px rgba(138, 43, 226, 0.8); }
+}
+
+@keyframes dateColorBlink2 {
+  0%, 100% { filter: hue-rotate(0deg); box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+  20% { filter: hue-rotate(90deg); box-shadow: 0 0 30px rgba(135, 206, 250, 0.8); }
+  40% { filter: hue-rotate(180deg); box-shadow: 0 0 30px rgba(255, 105, 180, 0.8); }
+  60% { filter: hue-rotate(270deg); box-shadow: 0 0 30px rgba(147, 112, 219, 0.8); }
+  80% { filter: hue-rotate(360deg); box-shadow: 0 0 30px rgba(255, 192, 203, 0.8); }
+}
+
+@keyframes dateColorBlink3 {
+  0%, 100% { filter: hue-rotate(0deg); box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+  33% { filter: hue-rotate(120deg); box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
+  66% { filter: hue-rotate(240deg); box-shadow: 0 0 30px rgba(218, 112, 214, 0.8); }
+}
+
+@keyframes dateColorBlink4 {
+  0%, 100% { filter: hue-rotate(0deg); box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+  25% { filter: hue-rotate(80deg); box-shadow: 0 0 30px rgba(30, 144, 255, 0.8); }
+  50% { filter: hue-rotate(160deg); box-shadow: 0 0 30px rgba(255, 69, 0, 0.8); }
+  75% { filter: hue-rotate(240deg); box-shadow: 0 0 30px rgba(186, 85, 211, 0.8); }
+}
+
+@keyframes dateColorBlink5 {
+  0%, 100% { filter: hue-rotate(0deg); box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+  30% { filter: hue-rotate(100deg); box-shadow: 0 0 30px rgba(255, 20, 147, 0.8); }
+  60% { filter: hue-rotate(200deg); box-shadow: 0 0 30px rgba(0, 191, 255, 0.8); }
+}
+
+@keyframes dateColorBlink6 {
+  0%, 100% { filter: hue-rotate(0deg); box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+  20% { filter: hue-rotate(70deg); box-shadow: 0 0 30px rgba(255, 182, 193, 0.8); }
+  40% { filter: hue-rotate(140deg); box-shadow: 0 0 30px rgba(255, 105, 180, 0.8); }
+  60% { filter: hue-rotate(210deg); box-shadow: 0 0 30px rgba(148, 0, 211, 0.8); }
+  80% { filter: hue-rotate(280deg); box-shadow: 0 0 30px rgba(255, 20, 147, 0.8); }
+}
+
+@keyframes dateColorBlink7 {
+  0%, 100% { filter: hue-rotate(0deg); box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+  25% { filter: hue-rotate(50deg); box-shadow: 0 0 30px rgba(255, 192, 203, 0.8); }
+  50% { filter: hue-rotate(150deg); box-shadow: 0 0 30px rgba(138, 43, 226, 0.8); }
+  75% { filter: hue-rotate(250deg); box-shadow: 0 0 30px rgba(135, 206, 250, 0.8); }
+}
+
+@keyframes dateColorBlink8 {
+  0%, 100% { filter: hue-rotate(0deg); box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+  16% { filter: hue-rotate(60deg); box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
+  33% { filter: hue-rotate(120deg); box-shadow: 0 0 30px rgba(255, 20, 147, 0.8); }
+  50% { filter: hue-rotate(180deg); box-shadow: 0 0 30px rgba(30, 144, 255, 0.8); }
+  66% { filter: hue-rotate(240deg); box-shadow: 0 0 30px rgba(147, 112, 219, 0.8); }
+  83% { filter: hue-rotate(300deg); box-shadow: 0 0 30px rgba(255, 105, 180, 0.8); }
 }
