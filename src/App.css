@@ -76,6 +76,7 @@
   width: 100%;
   max-width: 900px;
   padding: 1rem;
+  overflow: visible;
 }
 
 .road {
@@ -85,7 +86,7 @@
   background: linear-gradient(to bottom, #4a4a4a 0%, #2a2a2a 100%);
   border-radius: 60px;
   margin:0 0  2rem 0;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -117,13 +118,20 @@
 
 .truck-container {
   position: absolute;
-  bottom: 25px;
+  bottom: 35px;
   width: 80px;
   height: 60px;
   transform: translateX(-50%);
   transition: left 1s ease-out;
-  z-index: 10;
+  z-index: 5;
   animation: truckBounce 2s ease-in-out infinite;
+}
+
+.truck-container.truck-2 {
+  bottom: 10px;
+  z-index: 4;
+  animation: truckBounce 2s ease-in-out infinite;
+  animation-delay: 0.3s;
 }
 
 @keyframes truckBounce {
@@ -138,6 +146,220 @@
   }
   75% {
     transform: translateX(-50%) translateX(4px) translateY(-6px);
+  }
+}
+
+/* Trees along the road */
+.tree {
+  position: absolute;
+  bottom: -12px;
+  width: 40px;
+  height: 80px;
+  z-index: 15;
+  transform-origin: bottom center;
+}
+
+.tree-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Left side trees - each with different animation */
+.tree-left-1 {
+  left: 12%;
+  animation: treeSway1 2.5s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.tree-left-2 {
+  left: 28%;
+  animation: treeSway2 3.2s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+.tree-left-3 {
+  left: 52%;
+  animation: treeSway3 2.8s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+
+.tree-left-4 {
+  left: 78%;
+  animation: treeSway4 3.5s ease-in-out infinite;
+  animation-delay: 0.9s;
+}
+
+/* Right side trees - each with different animation */
+.tree-right-1 {
+  right: 20%;
+  animation: treeSway1 3.1s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.tree-right-2 {
+  right: 42%;
+  animation: treeSway2 2.7s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.tree-right-3 {
+  right: 62%;
+  animation: treeSway3 3.3s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+
+.tree-right-4 {
+  right: 85%;
+  animation: treeSway4 2.9s ease-in-out infinite;
+  animation-delay: 1.1s;
+}
+
+.tree-left-5 {
+  left: 8%;
+  animation: treeSway2 3.6s ease-in-out infinite;
+  animation-delay: 1.7s;
+}
+
+.tree-right-5 {
+  right: 10%;
+  animation: treeSway3 2.4s ease-in-out infinite;
+  animation-delay: 1.9s;
+}
+
+.tree-left-6 {
+  left: 65%;
+  animation: treeSway1 3.8s ease-in-out infinite;
+  animation-delay: 2.2s;
+}
+
+.tree-right-6 {
+  right: 30%;
+  animation: treeSway4 2.5s ease-in-out infinite;
+  animation-delay: 2.4s;
+}
+
+/* Top trees - above the road */
+.tree-top-left-1 {
+  left: 18%;
+  top: -65px;
+  animation: treeSway2 3.3s ease-in-out infinite;
+  animation-delay: 0.7s;
+}
+
+.tree-top-right-1 {
+  right: 25%;
+  top: -65px;
+  animation: treeSway3 2.7s ease-in-out infinite;
+  animation-delay: 1.0s;
+}
+
+.tree-top-left-2 {
+  left: 58%;
+  top: -65px;
+  animation: treeSway1 3.5s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+.tree-top-right-2 {
+  right: 70%;
+  top: -65px;
+  animation: treeSway4 2.8s ease-in-out infinite;
+  animation-delay: 1.8s;
+}
+
+/* Alternative shaped trees - triangular/slender */
+.tree-alt {
+  width: 35px;
+  height: 75px;
+}
+
+.tree-left-alt-1 {
+  left: 5%;
+  animation: treeSway3 2.6s ease-in-out infinite;
+  animation-delay: 2.6s;
+}
+
+.tree-right-alt-1 {
+  right: 5%;
+  animation: treeSway1 3.4s ease-in-out infinite;
+  animation-delay: 2.8s;
+}
+
+.tree-left-alt-2 {
+  left: 38%;
+  animation: treeSway2 2.9s ease-in-out infinite;
+  animation-delay: 3.0s;
+}
+
+.tree-right-alt-2 {
+  right: 48%;
+  animation: treeSway4 3.2s ease-in-out infinite;
+  animation-delay: 3.2s;
+}
+
+.tree-top-alt-left-1 {
+  left: 32%;
+  top: -60px;
+  animation: treeSway1 3.1s ease-in-out infinite;
+  animation-delay: 2.0s;
+}
+
+.tree-top-alt-right-1 {
+  right: 8%;
+  top: -60px;
+  animation: treeSway2 2.7s ease-in-out infinite;
+  animation-delay: 2.3s;
+}
+
+.tree-top-alt-left-2 {
+  left: 72%;
+  top: -60px;
+  animation: treeSway3 3.3s ease-in-out infinite;
+  animation-delay: 2.5s;
+}
+
+.tree-top-alt-right-2 {
+  right: 82%;
+  top: -60px;
+  animation: treeSway4 2.5s ease-in-out infinite;
+  animation-delay: 2.7s;
+}
+
+/* Different sway animations for variety */
+@keyframes treeSway1 {
+  0%, 100% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes treeSway2 {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(7deg);
+  }
+}
+
+@keyframes treeSway3 {
+  0%, 100% {
+    transform: rotate(-7deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes treeSway4 {
+  0%, 100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(6deg);
   }
 }
 

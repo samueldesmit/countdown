@@ -373,6 +373,256 @@ function App() {
         <div className="journey-animation">
           <div className="road">
             <div className="road-line"></div>
+            {/* Trees along the road */}
+            <div className="tree tree-left-1">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-right-1">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-left-2">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-right-2">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-left-3">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-right-3">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-left-4">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-right-4">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-left-5">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-right-5">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-left-6">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-right-6">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-top-left-1">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-top-right-1">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-top-left-2">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-top-right-2">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk */}
+                <rect x="25" y="60" width="10" height="20" fill="#8b4513"/>
+                {/* Tree leaves */}
+                <circle cx="30" cy="45" r="15" fill="#2d5016"/>
+                <circle cx="25" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="35" cy="40" r="12" fill="#2d5016"/>
+                <circle cx="30" cy="35" r="10" fill="#2d5016"/>
+              </svg>
+            </div>
+            {/* Different shaped trees - triangular/slender */}
+            <div className="tree tree-alt tree-left-alt-1">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk - thinner */}
+                <rect x="27" y="55" width="6" height="25" fill="#654321"/>
+                {/* Triangle-shaped leaves */}
+                <polygon points="30,10 15,45 45,45" fill="#1a4d0e"/>
+                <polygon points="30,20 20,50 40,50" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-alt tree-right-alt-1">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk - thinner */}
+                <rect x="27" y="55" width="6" height="25" fill="#654321"/>
+                {/* Triangle-shaped leaves */}
+                <polygon points="30,10 15,45 45,45" fill="#1a4d0e"/>
+                <polygon points="30,20 20,50 40,50" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-alt tree-left-alt-2">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk - thinner */}
+                <rect x="27" y="55" width="6" height="25" fill="#654321"/>
+                {/* Triangle-shaped leaves */}
+                <polygon points="30,10 15,45 45,45" fill="#1a4d0e"/>
+                <polygon points="30,20 20,50 40,50" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-alt tree-right-alt-2">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk - thinner */}
+                <rect x="27" y="55" width="6" height="25" fill="#654321"/>
+                {/* Triangle-shaped leaves */}
+                <polygon points="30,10 15,45 45,45" fill="#1a4d0e"/>
+                <polygon points="30,20 20,50 40,50" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-alt tree-top-alt-left-1">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk - thinner */}
+                <rect x="27" y="55" width="6" height="25" fill="#654321"/>
+                {/* Triangle-shaped leaves */}
+                <polygon points="30,10 15,45 45,45" fill="#1a4d0e"/>
+                <polygon points="30,20 20,50 40,50" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-alt tree-top-alt-right-1">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk - thinner */}
+                <rect x="27" y="55" width="6" height="25" fill="#654321"/>
+                {/* Triangle-shaped leaves */}
+                <polygon points="30,10 15,45 45,45" fill="#1a4d0e"/>
+                <polygon points="30,20 20,50 40,50" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-alt tree-top-alt-left-2">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk - thinner */}
+                <rect x="27" y="55" width="6" height="25" fill="#654321"/>
+                {/* Triangle-shaped leaves */}
+                <polygon points="30,10 15,45 45,45" fill="#1a4d0e"/>
+                <polygon points="30,20 20,50 40,50" fill="#2d5016"/>
+              </svg>
+            </div>
+            <div className="tree tree-alt tree-top-alt-right-2">
+              <svg className="tree-svg" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg">
+                {/* Tree trunk - thinner */}
+                <rect x="27" y="55" width="6" height="25" fill="#654321"/>
+                {/* Triangle-shaped leaves */}
+                <polygon points="30,10 15,45 45,45" fill="#1a4d0e"/>
+                <polygon points="30,20 20,50 40,50" fill="#2d5016"/>
+              </svg>
+            </div>
             <div className="apartment-start">
               <svg className="apartment" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 {/* Apartment building structure */}
@@ -404,6 +654,28 @@ function App() {
                 <rect x="10" y="25" width="50" height="25" fill="#d97757" rx="2"/>
                 {/* Truck cabin */}
                 <rect x="60" y="30" width="20" height="20" fill="#a67c52" rx="2"/>
+                {/* Windows */}
+                <rect x="63" y="33" width="6" height="6" fill="#e8d5b7"/>
+                <rect x="70" y="33" width="6" height="6" fill="#e8d5b7"/>
+                {/* Wheels - grouped for animation */}
+                <g className="wheel wheel-1">
+                  <circle cx="25" cy="50" r="6" fill="#2c2c2c"/>
+                  <circle cx="25" cy="50" r="3" fill="#666"/>
+                </g>
+                <g className="wheel wheel-2">
+                  <circle cx="50" cy="50" r="6" fill="#2c2c2c"/>
+                  <circle cx="50" cy="50" r="3" fill="#666"/>
+                </g>
+                {/* Headlights */}
+                <circle cx="10" cy="37" r="2" fill="#ffd700"/>
+              </svg>
+            </div>
+            <div className="truck-container truck-2" style={{ left: `${Math.max(0, journeyProgress - 5)}%` }}>
+              <svg className="truck truck-2-svg" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+                {/* Truck body */}
+                <rect x="10" y="25" width="50" height="25" fill="#c5896b" rx="2"/>
+                {/* Truck cabin */}
+                <rect x="60" y="30" width="20" height="20" fill="#8b6f47" rx="2"/>
                 {/* Windows */}
                 <rect x="63" y="33" width="6" height="6" fill="#e8d5b7"/>
                 <rect x="70" y="33" width="6" height="6" fill="#e8d5b7"/>
