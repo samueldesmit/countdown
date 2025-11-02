@@ -32,18 +32,29 @@ function App() {
   }, [targetDate, startDate]);
 
   // Calculate days remaining from today to targetDate
-  // Add 1 day so that on 11 feb it shows "nog 1 dag"
+  // Match the display logic in the calendar (item.dayNumber - 1)
   const daysRemaining = useMemo(() => {
     const diff = (targetDate - today) / (1000 * 60 * 60 * 24);
     const days = Math.ceil(diff);
-    // Add 1 day to show one day ahead
-    return days + 1;
+    // Match calendar display: displayDay = item.dayNumber - 1
+    // So we need to subtract 1 from the calculated remaining days
+    return Math.max(1, days - 1);
   }, [targetDate, today]);
 
   // Check if we've reached or passed the target date
   const isTargetDateReached = useMemo(() => {
     return today >= targetDate;
   }, [today, targetDate]);
+
+  // Dark mode state - default based on time of day
+  // Light mode: 8:00 - 18:00, Dark mode: outside those hours
+  const getDefaultDarkMode = () => {
+    const now = new Date();
+    const hours = now.getHours();
+    return hours < 8 || hours >= 18;
+  };
+
+  const [isDarkMode, setIsDarkMode] = useState(getDefaultDarkMode);
 
   // Calculate days passed (from start to preview date)
   const daysPassed = useMemo(() => {
@@ -211,8 +222,16 @@ function App() {
   }, [daysRemaining, today, actualToday, daysPassed, totalDaysInJourney]);
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className={`App ${isDarkMode ? 'dark-mode' : ''}`}>
+      <header className={`App-header ${isDarkMode ? 'dark-mode' : ''}`}>
+        {/* Dark Mode Toggle */}
+        <button 
+          className="dark-mode-toggle"
+          onClick={() => setIsDarkMode(!isDarkMode)}
+          aria-label="Toggle dark mode"
+        >
+          {isDarkMode ? '☀️' : '🌙'}
+        </button>
         <h1>Lil, Sam en Tommie verhuizen naar Braboland op 12 februari 2026</h1>        
         {/* Apartment to Home Animation */}
         <div className="journey-animation">
@@ -223,20 +242,20 @@ function App() {
                 {/* Apartment building structure */}
                 <rect x="20" y="20" width="60" height="75" fill="#888" stroke="#555" strokeWidth="2"/>
                 {/* Windows - multiple floors */}
-                <rect x="28" y="30" width="8" height="10" fill="#87ceeb"/>
-                <rect x="40" y="30" width="8" height="10" fill="#87ceeb"/>
+                <rect x="28" y="30" width="8" height="10" fill="#e8d5b7"/>
+                <rect x="40" y="30" width="8" height="10" fill="#e8d5b7"/>
                 <rect x="52" y="30" width="8" height="10" fill="#ffd700"/>
-                <rect x="64" y="30" width="8" height="10" fill="#87ceeb"/>
+                <rect x="64" y="30" width="8" height="10" fill="#e8d5b7"/>
                 {/* Second floor */}
-                <rect x="28" y="45" width="8" height="10" fill="#87ceeb"/>
-                <rect x="40" y="45" width="8" height="10" fill="#87ceeb"/>
-                <rect x="52" y="45" width="8" height="10" fill="#87ceeb"/>
+                <rect x="28" y="45" width="8" height="10" fill="#e8d5b7"/>
+                <rect x="40" y="45" width="8" height="10" fill="#e8d5b7"/>
+                <rect x="52" y="45" width="8" height="10" fill="#e8d5b7"/>
                 <rect x="64" y="45" width="8" height="10" fill="#ffd700"/>
                 {/* Third floor */}
-                <rect x="28" y="60" width="8" height="10" fill="#87ceeb"/>
+                <rect x="28" y="60" width="8" height="10" fill="#e8d5b7"/>
                 <rect x="40" y="60" width="8" height="10" fill="#ffd700"/>
-                <rect x="52" y="60" width="8" height="10" fill="#87ceeb"/>
-                <rect x="64" y="60" width="8" height="10" fill="#87ceeb"/>
+                <rect x="52" y="60" width="8" height="10" fill="#e8d5b7"/>
+                <rect x="64" y="60" width="8" height="10" fill="#e8d5b7"/>
                 {/* Door */}
                 <rect x="42" y="75" width="16" height="20" fill="#8b4513"/>
                 {/* Balcony */}
@@ -246,12 +265,12 @@ function App() {
             <div className="truck-container" style={{ left: `${journeyProgress}%` }}>
               <svg className="truck" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
                 {/* Truck body */}
-                <rect x="10" y="25" width="50" height="25" fill="#4a90e2" rx="2"/>
+                <rect x="10" y="25" width="50" height="25" fill="#d97757" rx="2"/>
                 {/* Truck cabin */}
-                <rect x="60" y="30" width="20" height="20" fill="#357abd" rx="2"/>
+                <rect x="60" y="30" width="20" height="20" fill="#a67c52" rx="2"/>
                 {/* Windows */}
-                <rect x="63" y="33" width="6" height="6" fill="#87ceeb"/>
-                <rect x="70" y="33" width="6" height="6" fill="#87ceeb"/>
+                <rect x="63" y="33" width="6" height="6" fill="#e8d5b7"/>
+                <rect x="70" y="33" width="6" height="6" fill="#e8d5b7"/>
                 {/* Wheels - grouped for animation */}
                 <g className="wheel wheel-1">
                   <circle cx="25" cy="50" r="6" fill="#2c2c2c"/>
@@ -275,8 +294,8 @@ function App() {
                 <rect x="42" y="60" width="16" height="25" fill="#8b4513"/>
                 <circle cx="54" cy="72" r="1" fill="#ffd700"/>
                 {/* Windows */}
-                <rect x="30" y="48" width="8" height="8" fill="#87ceeb"/>
-                <rect x="62" y="48" width="8" height="8" fill="#87ceeb"/>
+                <rect x="30" y="48" width="8" height="8" fill="#e8d5b7"/>
+                <rect x="62" y="48" width="8" height="8" fill="#e8d5b7"/>
               </svg>
             </div>
             <div className="keys-icon" style={{ opacity: daysRemaining === 0 ? 1 : 0 }}>
@@ -310,17 +329,27 @@ function App() {
             // If daysPassed = 50, then days 182, 181, ..., 133 are in the past (should be crossed)
             // Days with dayNumber > (totalDaysInJourney - daysPassed) should be crossed off
             const isCrossedOff = item.dayNumber > (totalDaysInJourney - daysPassed);
-            // Check if this date is the target date (12 februari)
+            
+            // Check if this date is today (half crossed off)
             const itemDate = new Date(item.date);
             itemDate.setHours(0, 0, 0, 0);
+            const todayOnly = new Date(today);
+            todayOnly.setHours(0, 0, 0, 0);
+            const isToday = itemDate.getTime() === todayOnly.getTime();
+            
+            // Check if this date is the target date (12 februari)
             const targetDateOnly = new Date(targetDate);
             targetDateOnly.setHours(0, 0, 0, 0);
             const isTargetDate = itemDate.getTime() === targetDateOnly.getTime();
             
+            // If today, always show as half-crossed-off, not fully crossed-off
+            const shouldBeHalfCrossed = isToday && !isTargetDate;
+            const shouldBeFullyCrossed = isCrossedOff && !isToday;
+            
             return (
               <div
                 key={index}
-                className={`date-item ${isCrossedOff ? 'crossed-off' : ''}`}
+                className={`date-item ${shouldBeFullyCrossed ? 'crossed-off' : ''} ${shouldBeHalfCrossed ? 'half-crossed-off' : ''}`}
               >
                 <div className="date-day">
                   {isTargetDate ? 'het is zover' : (() => {
