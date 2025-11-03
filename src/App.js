@@ -4,6 +4,51 @@ import Tree from './Tree';
 import './App.css';
 
 function App() {
+  // Language state with persistence
+  const [lang, setLang] = useState(() => localStorage.getItem('grave-countdown-lang') || 'nl');
+  useEffect(() => {
+    localStorage.setItem('grave-countdown-lang', lang);
+  }, [lang]);
+
+  // Simple i18n dictionary with pluralization helpers
+  const tr = useMemo(() => ({
+    nl: {
+      title: 'Lil, Sam en Tommie krijgen de sleutels van Braboland op 12 februari 2026',
+      itsTime: 'het is zover',
+      remaining: (n) => `resterend ${n} ${n === 1 ? 'dag' : 'dagen'}`,
+      unitMonths: (n) => `${n} ${n === 1 ? 'maand' : 'maanden'}`,
+      unitWeeks: (n) => `${n} ${n === 1 ? 'week' : 'weken'}`,
+      unitDays: (n) => `${n} ${n === 1 ? 'dag' : 'dagen'}`,
+      unitHours: (n) => `${n} ${n === 1 ? 'uur' : 'uren'}`,
+      unitMinutes: (n) => `${n} ${n === 1 ? 'minuut' : 'minuten'}`,
+      unitSeconds: (n) => `${n} ${n === 1 ? 'seconde' : 'seconden'}`,
+      crossed: (n) => `${n} dagen verstreken`,
+      dateDayPrefix: (n) => (n > 0 ? `nog ${n} ${n === 1 ? 'dag' : 'dagen'}` : ''),
+      dayNames: ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'],
+      monthNames: ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'],
+      langLabelNL: 'NL',
+      langLabelEN: 'EN'
+    },
+    en: {
+      title: 'Lil, Sam and Tommie receive the keys to Braboland on February 12, 2026',
+      itsTime: "it's time",
+      remaining: (n) => `remaining ${n} ${n === 1 ? 'day' : 'days'}`,
+      unitMonths: (n) => `${n} ${n === 1 ? 'month' : 'months'}`,
+      unitWeeks: (n) => `${n} ${n === 1 ? 'week' : 'weeks'}`,
+      unitDays: (n) => `${n} ${n === 1 ? 'day' : 'days'}`,
+      unitHours: (n) => `${n} ${n === 1 ? 'hour' : 'hours'}`,
+      unitMinutes: (n) => `${n} ${n === 1 ? 'minute' : 'minutes'}`,
+      unitSeconds: (n) => `${n} ${n === 1 ? 'second' : 'seconds'}`,
+      crossed: (n) => `${n} days elapsed`,
+      dateDayPrefix: (n) => (n > 0 ? `${n} ${n === 1 ? 'day' : 'days'} left` : ''),
+      dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      langLabelNL: 'NL',
+      langLabelEN: 'EN'
+    }
+  }), []);
+
+  const t = useMemo(() => tr[lang], [tr, lang]);
   const targetDate = useMemo(() => {
     const date = new Date('2026-02-12');
     date.setHours(11, 0, 0, 0);
@@ -59,6 +104,8 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(getDefaultDarkMode);
   const datesGridRef = useRef(null);
   const countdownInfoRef = useRef(null);
+  const [showDog, setShowDog] = useState(false);
+  const [dogKey, setDogKey] = useState(0);
 
   // Calculate days passed (from start to preview date)
   const daysPassed = useMemo(() => {
@@ -210,6 +257,31 @@ function App() {
     };
   }, []);
 
+  // Dog appearance loop: runs from apartment to house every 5 seconds
+  useEffect(() => {
+    let cancelled = false;
+    let intervalId;
+    
+    const triggerDog = () => {
+      if (cancelled) return;
+      setShowDog(false); // Reset first
+      setTimeout(() => {
+        if (cancelled) return;
+        setShowDog(true);
+        setDogKey(prev => prev + 1); // Force re-render to restart animation
+      }, 10);
+    };
+    
+    // Start immediately, then repeat every 5 seconds
+    triggerDog();
+    intervalId = setInterval(triggerDog, 10000);
+    
+    return () => {
+      cancelled = true;
+      clearInterval(intervalId);
+    };
+  }, []);
+
   // Calculate journey progress (0 to ~85% to account for home position)
   // Progress based on days passed from today
   const journeyProgress = useMemo(() => {
@@ -279,14 +351,9 @@ function App() {
 
   // Format date name
   const formatDateName = (date) => {
-    const dayNames = ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'];
-    const monthNames = ['januari', 'februari', 'maart', 'april', 'mei', 'juni',
-      'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
-    
-    const dayName = dayNames[date.getDay()];
-    const monthName = monthNames[date.getMonth()];
+    const dayName = t.dayNames[date.getDay()];
+    const monthName = t.monthNames[date.getMonth()];
     const day = date.getDate();
-    
     return `${dayName}, ${day} ${monthName}`;
   };
 
@@ -330,7 +397,19 @@ function App() {
         >
           {isDarkMode ? '☀️' : '🌙'}
         </button>
-        <h1>Lil, Sam en Tommie verhuizen naar Braboland op 12 februari 2026</h1>        
+        {/* Language Switch - top right */}
+        <div className="lang-switch" role="group" aria-label="Language switch">
+          <button
+            className={`lang-btn ${lang === 'nl' ? 'active' : ''}`}
+            onClick={() => setLang('nl')}
+          >{t.langLabelNL}</button>
+          <span className="lang-sep">|</span>
+          <button
+            className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
+            onClick={() => setLang('en')}
+          >{t.langLabelEN}</button>
+        </div>
+        <h1>{t.title}</h1>        
         {/* Apartment to Home Animation */}
         <div className="journey-animation">
           <div className="road">
@@ -486,24 +565,27 @@ function App() {
             <div className="keys-icon" style={{ opacity: daysRemaining === 0 ? 1 : 0 }}>
               🔑
             </div>
+            {showDog && (
+              <span key={dogKey} className="dog-emoji" aria-hidden="true" role="img">🐶</span>
+            )}
           </div>
         </div>
 
         <div className="countdown-info" ref={countdownInfoRef}>
           {isTargetDateReached ? (
-            <p className="time-item" style={{ marginBottom: '1.5rem', minWidth: '250px', textAlign: 'center' }}>het is zover</p>
+            <p className="time-item" style={{ marginBottom: '1.5rem', minWidth: '250px', textAlign: 'center' }}>{t.itsTime}</p>
           ) : (
             <>
-              <p className="time-item" style={{ marginBottom: '1.5rem', minWidth: '250px', textAlign: 'center' }}>resterend {daysRemaining} {daysRemaining === 1 ? 'dag' : 'dagen'}</p>
+              <p className="time-item" style={{ marginBottom: '1.5rem', minWidth: '250px', textAlign: 'center' }}>{t.remaining(daysRemaining)}</p>
               <div className="time-remaining">
-                <p className="time-item">{timeRemaining.months} {timeRemaining.months === 1 ? 'maand' : 'maanden'}</p>
-                <p className="time-item">{timeRemaining.weeks} {timeRemaining.weeks === 1 ? 'week' : 'weken'}</p>
-                <p className="time-item">{timeRemaining.days} {timeRemaining.days === 1 ? 'dag' : 'dagen'}</p>
-                <p className="time-item">{timeRemaining.hours} {timeRemaining.hours === 1 ? 'uur' : 'uren'}</p>
-                <p className="time-item">{timeRemaining.minutes} {timeRemaining.minutes === 1 ? 'minuut' : 'minuten'}</p>
-                <p className="time-item">{timeRemaining.seconds} {timeRemaining.seconds === 1 ? 'seconde' : 'seconden'}</p>
+                <p className="time-item">{t.unitMonths(timeRemaining.months)}</p>
+                <p className="time-item">{t.unitWeeks(timeRemaining.weeks)}</p>
+                <p className="time-item">{t.unitDays(timeRemaining.days)}</p>
+                <p className="time-item">{t.unitHours(timeRemaining.hours)}</p>
+                <p className="time-item">{t.unitMinutes(timeRemaining.minutes)}</p>
+                <p className="time-item">{t.unitSeconds(timeRemaining.seconds)}</p>
               </div>
-              <p className="crossed-info">{daysPassed} dagen verstreken</p>
+              <p className="crossed-info">{t.crossed(daysPassed)}</p>
             </>
           )}
         </div>
@@ -542,9 +624,9 @@ function App() {
                 className={`date-item ${shouldBeFullyCrossed ? 'crossed-off' : ''} ${shouldBeHalfCrossed ? 'half-crossed-off' : ''} ${isChristmas ? 'christmas-date' : ''}`}
               >
                 <div className="date-day">
-                  {isTargetDate ? 'het is zover' : (() => {
+                  {isTargetDate ? t.itsTime : (() => {
                     const displayDay = item.dayNumber - 1;
-                    return displayDay > 0 ? `nog ${displayDay} ${displayDay === 1 ? 'dag' : 'dagen'}` : '';
+                    return t.dateDayPrefix(displayDay);
                   })()}
                 </div>
                 <div className="date-name">{formatDateName(item.date)}</div>

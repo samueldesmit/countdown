@@ -32,6 +32,62 @@
   border-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Language switch (top-right) */
+.lang-switch {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 999px;
+  padding: 0.25rem 0.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.App.dark-mode .lang-switch {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.15rem 0.35rem;
+  color: #333;
+}
+
+.App.dark-mode .lang-btn {
+  color: #f9d7c2;
+}
+
+.lang-btn.active {
+  text-decoration: none;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+}
+
+.App.dark-mode .lang-btn.active {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.lang-btn:not(.active) {
+  opacity: 0.6;
+}
+
+.lang-btn:not(.active):hover {
+  opacity: 0.9;
+}
+
+.lang-sep {
+  opacity: 0.6;
+}
+
 .App-header {
   background: #f9d7c2;
   min-height: 100vh;
@@ -77,6 +133,7 @@
   max-width: 900px;
   padding: 1rem;
   overflow: visible;
+  margin-top: 2rem;
 }
 
 .road {
@@ -376,6 +433,43 @@
   width: 100%;
   height: 100%;
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+  position: relative;
+  z-index: 2; /* keep truck above dog */
+}
+
+/* Dog emoji that runs from apartment to house every 5 seconds */
+.dog-emoji {
+  position: absolute;
+  left: calc(1% + 10px); /* start 10px to the right of apartment */
+  bottom: 35px; /* on the road */
+  font-size: 24px;
+  line-height: 1;
+  z-index: 3; /* above road, below trucks */
+  animation: dogRunToHouse 2.5s ease-in-out forwards;
+}
+
+@keyframes dogRunToHouse {
+  0% {
+    left: calc(1% + 10px); /* start 10px to the right of apartment */
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+  }
+  5% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.1);
+  }
+  95% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1);
+  }
+  100% {
+    left: 90%; /* end at house (right side) */
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+  }
 }
 
 .apartment-start {
@@ -603,6 +697,12 @@
   .truck-container {
     width: 60px;
     height: 45px;
+  }
+
+  .dog-emoji {
+    left: calc(1% + 20px);
+    bottom: 30px;
+    font-size: 18px;
   }
 
   .apartment-start {
