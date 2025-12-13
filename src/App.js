@@ -48,6 +48,8 @@ function App() {
     }
   }), []);
 
+
+  
   const t = useMemo(() => tr[lang], [tr, lang]);
   const targetDate = useMemo(() => {
     const date = new Date('2026-02-12');
@@ -106,6 +108,11 @@ function App() {
   const countdownInfoRef = useRef(null);
   const [showDog, setShowDog] = useState(false);
   const [dogKey, setDogKey] = useState(0);
+  
+  // Serial port refs for Arduino communication
+  const serialPortRef = useRef(null);
+  const serialWriterRef = useRef(null);
+  const [isSerialConnected, setIsSerialConnected] = useState(false);
 
   // Calculate days passed (from start to preview date)
   const daysPassed = useMemo(() => {
@@ -198,6 +205,60 @@ function App() {
 
     return () => clearInterval(interval);
   }, [targetDate]);
+
+  // Serial port connection handler
+  const handleSerialConnect = async () => {
+    try {
+      // Check if Web Serial API is available
+      if (!('serial' in navigator)) {
+        alert('Web Serial API is not supported in this browser');
+        return;
+      }
+
+      const port = await navigator.serial.requestPort();
+      await port.open({ baudRate: 9600 });
+
+      const writer = port.writable.getWriter();
+      
+      serialPortRef.current = port;
+      serialWriterRef.current = writer;
+      setIsSerialConnected(true);
+    } catch (error) {
+      console.error('Error connecting to serial port:', error);
+      setIsSerialConnected(false);
+    }
+  };
+
+  // Cleanup serial port on unmount
+  useEffect(() => {
+    return () => {
+      if (serialWriterRef.current) {
+        serialWriterRef.current.releaseLock();
+        serialWriterRef.current = null;
+      }
+      if (serialPortRef.current) {
+        serialPortRef.current.close();
+        serialPortRef.current = null;
+      }
+    };
+  }, []);
+
+  // Send seconds to Arduino whenever seconds value changes (only last digit 0-9)
+  useEffect(() => {
+    const sendSecondsToArduino = async () => {
+      if (!serialWriterRef.current) return;
+
+      try {
+        // Get only the last digit (0-9) of seconds
+        const secondsDigit = (timeRemaining.seconds % 10).toString();
+        await serialWriterRef.current.write(new TextEncoder().encode(`${secondsDigit}\n`));
+      } catch (error) {
+        console.error('Error sending data to Arduino:', error);
+      }
+    };
+
+    sendSecondsToArduino();
+  }, [timeRemaining.seconds]);
 
   // Removed columnsPerRow calculation - no longer needed after GSAP animations removed
 
@@ -397,6 +458,28 @@ function App() {
         >
           {isDarkMode ? '☀️' : '🌙'}
         </button>
+        {/* Serial Port Connection */}
+        {('serial' in navigator) && (
+          <button 
+            className="serial-connect-btn"
+            onClick={handleSerialConnect}
+            aria-label="Connect to Arduino"
+            style={{
+              position: 'absolute',
+              top: '10px',
+              right: '120px',
+              padding: '8px 12px',
+              fontSize: '14px',
+              backgroundColor: isSerialConnected ? '#4caf50' : '#2196f3',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            {isSerialConnected ? '🔌 Connected' : '📡 Connect Arduino'}
+          </button>
+        )}
         {/* Language Switch - top right */}
         <div className="lang-switch" role="group" aria-label="Language switch">
           <button
