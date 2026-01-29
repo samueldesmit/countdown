@@ -221,35 +221,6 @@ function GlitchText({ children, className }) {
   );
 }
 
-// Animated counter
-function AnimatedCounter({ value, duration = 2000 }) {
-  const [displayValue, setDisplayValue] = useState(0);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    let startTime;
-    let animationId;
-    const startValue = displayValue;
-
-    const animate = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setDisplayValue(Math.floor(startValue + (value - startValue) * eased));
-
-      if (progress < 1) {
-        animationId = requestAnimationFrame(animate);
-      }
-    };
-
-    animationId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, duration]);
-
-  return <span ref={ref}>{String(displayValue).padStart(2, '0')}</span>;
-}
-
 // Floating icons
 function FloatingIcons() {
   const icons = ['🏠', '🔑', '📦', '🚚', '💫', '⭐', '🌙', '✨'];
