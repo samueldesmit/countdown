@@ -23,7 +23,7 @@ function Starfield() {
     };
 
     const initStars = () => {
-      stars = Array.from({ length: 80 }, () => ({
+      stars = Array.from({ length: 600 }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         z: Math.random() * 1500,
@@ -33,7 +33,7 @@ function Starfield() {
     };
 
     const initNebulas = () => {
-      nebulas = Array.from({ length: 2 }, () => ({
+      nebulas = Array.from({ length: 5 }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         radius: 100 + Math.random() * 200,
@@ -64,7 +64,7 @@ function Starfield() {
       const centerY = canvas.height / 2 + (mouseY - canvas.height / 2) * 0.1;
 
       stars.forEach(star => {
-        star.z -= 2;
+        star.z -= 3;
         if (star.z <= 0) {
           star.z = 1500;
           star.x = Math.random() * canvas.width;
@@ -141,11 +141,11 @@ function MeteorShower() {
         size: 2 + Math.random() * 4,
         angle: 35 + Math.random() * 20,
       };
-      setMeteors(prev => [...prev.slice(-5), meteor]);
+      setMeteors(prev => [...prev.slice(-10), meteor]);
       setTimeout(() => setMeteors(prev => prev.filter(m => m.id !== id)), 2000);
     };
 
-    const interval = setInterval(createMeteor, 2000);
+    const interval = setInterval(createMeteor, 800);
     return () => clearInterval(interval);
   }, []);
 
@@ -176,9 +176,9 @@ function MouseParticles() {
     const handleMouseMove = (e) => {
       mouseRef.current = { x: e.clientX, y: e.clientY };
 
-      if (Math.random() > 0.92) {
+      if (Math.random() > 0.7) {
         const id = Date.now() + Math.random();
-        setParticles(prev => [...prev.slice(-8), {
+        setParticles(prev => [...prev.slice(-20), {
           id,
           x: e.clientX + (Math.random() - 0.5) * 40,
           y: e.clientY + (Math.random() - 0.5) * 40,
@@ -220,10 +220,10 @@ function GlitchText({ children, className }) {
     </div>
   );
 }
-
+oke 
 // Floating icons
 function FloatingIcons() {
-  const icons = ['🏠', '🔑', '⭐', '✨'];
+  const icons = ['🏠', '🔑', '📦', '🚚', '💫', '⭐', '🌙', '✨'];
 
   return (
     <div className="floating-icons">
@@ -243,7 +243,6 @@ function FloatingIcons() {
     </div>
   );
 }
-
 
 // Ripple effect on click
 function RippleEffect() {
@@ -385,17 +384,12 @@ function EpicProgress({ progress }) {
 
 function AppEpic() {
   const [lang, setLang] = useState(() => localStorage.getItem('grave-countdown-lang') || 'nl');
-  const [isDayMode, setIsDayMode] = useState(() => localStorage.getItem('grave-countdown-daymode') === 'true');
   const [scrollY, setScrollY] = useState(0);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('grave-countdown-lang', lang);
   }, [lang]);
-
-  useEffect(() => {
-    localStorage.setItem('grave-countdown-daymode', isDayMode);
-  }, [isDayMode]);
 
   useEffect(() => {
     setLoaded(true);
@@ -486,23 +480,19 @@ function AppEpic() {
     };
 
     calc();
-    const i = setInterval(calc, 100);
+    const i = setInterval(calc, 16);
     return () => clearInterval(i);
   }, [targetDate, startDate]);
 
   return (
-    <div className={`app ${loaded ? 'loaded' : ''} ${isDayMode ? 'day-mode' : ''}`}>
-      {!isDayMode && <Starfield />}
-      {!isDayMode && <MeteorShower />}
+    <div className={`app ${loaded ? 'loaded' : ''}`}>
+      <Starfield />
+      <MeteorShower />
       <MouseParticles />
       <RippleEffect />
-      {!isDayMode && <FloatingIcons />}
+      <FloatingIcons />
 
       <div className="scroll-progress-bar" style={{ transform: `scaleX(${scrollY / (document.documentElement.scrollHeight - window.innerHeight) || 0})` }} />
-
-      <button className="daynight-toggle" onClick={() => setIsDayMode(!isDayMode)}>
-        {isDayMode ? '🌙' : '☀️'}
-      </button>
 
       <div className="lang-toggle">
         <button className={lang === 'nl' ? 'active' : ''} onClick={() => setLang('nl')}>NL</button>
@@ -538,7 +528,13 @@ function AppEpic() {
           </div>
         </div>
 
-        </section>
+        <div className="scroll-indicator">
+          <div className="scroll-mouse">
+            <div className="scroll-wheel" />
+          </div>
+          <span>SCROLL</span>
+        </div>
+      </section>
 
       <ScrollSection className="stats-section" delay={200}>
         <div className="stats-grid">
