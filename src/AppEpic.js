@@ -541,7 +541,6 @@ function AppEpic() {
           <div className="scroll-mouse">
             <div className="scroll-wheel" />
           </div>
-          <span>SCROLL</span>
         </div>
       </section>
 
