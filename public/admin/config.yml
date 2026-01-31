@@ -35,15 +35,44 @@ site_url: https://samueldesmit
 media_folder: "public/uploads"
 public_folder: "/uploads"
 
-# Collections - customize these based on your content needs
+# Collections
 collections:
   - name: "settings"
     label: "Site Settings"
     files:
-      - name: "general"
-        label: "General Settings"
-        file: "src/content/settings.json"
+      - name: "content"
+        label: "Site Content"
+        file: "src/content/siteContent.json"
         fields:
-          - { label: "Site Title", name: "title", widget: "string" }
-          - { label: "Description", name: "description", widget: "text" }
-          - { label: "Target Date", name: "targetDate", widget: "datetime", date_format: "YYYY-MM-DD", time_format: "HH:mm" }
+          - label: "Target Date"
+            name: "targetDate"
+            widget: "datetime"
+            date_format: "YYYY-MM-DD"
+            time_format: "HH:mm"
+            hint: "The countdown target date (e.g., moving day)"
+
+          - label: "Start Date"
+            name: "startDate"
+            widget: "datetime"
+            date_format: "YYYY-MM-DD"
+            hint: "When the countdown journey started"
+
+          - label: "Dutch Content"
+            name: "nl"
+            widget: "object"
+            fields:
+              - { label: "Title (Classic)", name: "title", widget: "string" }
+              - { label: "Title (Epic)", name: "titleEpic", widget: "string" }
+              - { label: "Subtitle (Epic)", name: "subtitle", widget: "string" }
+              - { label: "Date Label", name: "dateLabel", widget: "string" }
+              - { label: "It's Time Text", name: "itsTime", widget: "string" }
+
+          - label: "English Content"
+            name: "en"
+            widget: "object"
+            fields:
+              - { label: "Title (Classic)", name: "title", widget: "string" }
+              - { label: "Title (Epic)", name: "titleEpic", widget: "string" }
+              - { label: "Subtitle (Epic)", name: "subtitle", widget: "string" }
+              - { label: "Date Label", name: "dateLabel", widget: "string" }
+              - { label: "It's Time Text", name: "itsTime", widget: "string" }

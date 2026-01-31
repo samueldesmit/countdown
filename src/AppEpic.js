@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { gsap } from 'gsap';
 import './AppEpic.css';
+import siteContent from './content/siteContent.json';
 
 // Epic Starfield with nebula colors
 function Starfield() {
@@ -418,18 +419,18 @@ function AppEpic() {
 
   const tr = useMemo(() => ({
     nl: {
-      title: 'Lil, Sam & Tommie',
-      subtitle: 'REIS NAAR BRABOLAND',
-      date: '12 FEBRUARI 2026',
+      title: siteContent.nl.titleEpic,
+      subtitle: siteContent.nl.subtitle,
+      date: siteContent.nl.dateLabel,
       months: 'MND', weeks: 'WKN', days: 'DGN', hours: 'UUR', minutes: 'MIN', seconds: 'SEC', ms: 'MS',
       daysLeft: 'dagen te gaan',
       daysPassed: 'dagen voltooid',
       progress: 'van de reis',
     },
     en: {
-      title: 'Lil, Sam & Tommie',
-      subtitle: 'JOURNEY TO BRABOLAND',
-      date: 'FEBRUARY 12, 2026',
+      title: siteContent.en.titleEpic,
+      subtitle: siteContent.en.subtitle,
+      date: siteContent.en.dateLabel,
       months: 'MTH', weeks: 'WKS', days: 'DYS', hours: 'HRS', minutes: 'MIN', seconds: 'SEC', ms: 'MS',
       daysLeft: 'days to go',
       daysPassed: 'days complete',
@@ -439,8 +440,9 @@ function AppEpic() {
 
   const t = useMemo(() => tr[lang], [tr, lang]);
 
-  const targetDate = useMemo(() => new Date('2026-02-12T11:00:00'), []);
-  const startDate = useMemo(() => new Date('2025-08-15'), []);
+  // Dates from CMS content
+  const targetDate = useMemo(() => new Date(siteContent.targetDate), []);
+  const startDate = useMemo(() => new Date(siteContent.startDate), []);
 
   const [time, setTime] = useState({ months: 0, weeks: 0, days: 0, hours: 0, minutes: 0, seconds: 0, ms: 0, totalDays: 0, daysPassed: 0, progress: 0 });
 

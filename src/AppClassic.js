@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { gsap } from 'gsap';
 import Tree from './Tree';
 import './AppClassic.css';
+import siteContent from './content/siteContent.json';
 
 function AppClassic() {
   // Language state with persistence
@@ -11,10 +12,11 @@ function AppClassic() {
   }, [lang]);
 
   // Simple i18n dictionary with pluralization helpers
+  // Titles and itsTime are loaded from CMS content
   const tr = useMemo(() => ({
     nl: {
-      title: 'Lil, Sam en Tommie krijgen de sleutels van Braboland op 12 februari 2026',
-      itsTime: 'het is zover',
+      title: siteContent.nl.title,
+      itsTime: siteContent.nl.itsTime,
       remaining: (n) => `resterend ${n} ${n === 1 ? 'dag' : 'dagen'}`,
       unitMonths: (n) => `${n} ${n === 1 ? 'maand' : 'maanden'}`,
       unitWeeks: (n) => `${n} ${n === 1 ? 'week' : 'weken'}`,
@@ -30,8 +32,8 @@ function AppClassic() {
       langLabelEN: 'EN'
     },
     en: {
-      title: 'Lil, Sam and Tommie receive the keys to Braboland on February 12, 2026',
-      itsTime: "it's time",
+      title: siteContent.en.title,
+      itsTime: siteContent.en.itsTime,
       remaining: (n) => `remaining ${n} ${n === 1 ? 'day' : 'days'}`,
       unitMonths: (n) => `${n} ${n === 1 ? 'month' : 'months'}`,
       unitWeeks: (n) => `${n} ${n === 1 ? 'week' : 'weeks'}`,
@@ -49,9 +51,10 @@ function AppClassic() {
   }), []);
 
   const t = useMemo(() => tr[lang], [tr, lang]);
+  
+  // Target date from CMS content
   const targetDate = useMemo(() => {
-    const date = new Date('2026-02-12');
-    date.setHours(11, 0, 0, 0);
+    const date = new Date(siteContent.targetDate);
     return date;
   }, []);
 
@@ -66,9 +69,9 @@ function AppClassic() {
     return actualToday;
   }, [actualToday]);
 
-  // Calculate the start date (15 augustus 2025 - dag 182)
+  // Calculate the start date from CMS content
   const startDate = useMemo(() => {
-    const date = new Date('2025-08-15');
+    const date = new Date(siteContent.startDate);
     date.setHours(0, 0, 0, 0);
     return date;
   }, []);
