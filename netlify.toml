@@ -2,3 +2,9 @@
   command = "npm run build"
   publish = "build"
 
+# Redirect for Decap CMS admin
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200
+
